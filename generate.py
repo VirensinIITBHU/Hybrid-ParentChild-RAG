@@ -137,10 +137,11 @@ Answer:
 
     return answer
 
-
+#experimented with k =5,2,3
+#k = 3 is giving best results, k-5 (recall increase but precision decrease) k = 2 (vice versa)
 def generate_answer_with_context(query):
     standalone_query = rewrite_query(query)
-    docs = retrieve_hybrid(query=standalone_query, k=3)
+    docs = retrieve_hybrid(query=standalone_query, k=2)
     context = build_context(docs)
     history = format_history()
 

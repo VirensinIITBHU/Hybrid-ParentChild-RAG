@@ -1,5 +1,91 @@
 # Hybrid-ParentChild-RAG
 
+# Result Snapshot
+## Final Evaluation
+
+The final evaluation was performed on:
+
+* 10 research papers
+* 3,396 indexed chunks
+* 46 benchmark questions
+* Parent-level retrieval evaluation
+
+## Retrieval Evaluation
+
+```text
+BM25 Recall@10      = 91.30%
+Dense Recall@10     = 84.78%
+Hybrid Recall@10    = 97.83%
+```
+
+Only a single benchmark question failed to retrieve the correct parent document within the top 10 results.
+
+## Custom RAG Evaluation Framework
+
+The complete RAG pipeline was evaluated using a custom RAGAS-inspired evaluation framework measuring retrieval quality, answer quality, grounding, and context relevance.
+
+### Effect of Retrieved Context Size (k)
+
+During experimentation, different values of **k** (number of retrieved parent chunks passed to the LLM) were evaluated.
+
+| k | Retrieval Recall@10 | Answer Similarity | Faithfulness | Context Precision |
+| - | ------------------- | ----------------- | ------------ | ----------------- |
+| 2 | **0.9783**          | **0.8632**        | 0.7563       | **0.7283**        |
+| 3 | 0.9783              | 0.8602            | **0.7732**   | 0.6159            |
+| 5 | 0.9783              | 0.8574            | 0.7703       | 0.4652            |
+
+### Key Findings
+
+* **k = 2 produced the best overall balance** between answer quality and retrieval efficiency.
+* Retrieval Recall remained unchanged because the correct parent document was already being retrieved consistently.
+* Increasing context size beyond the most relevant chunks introduced additional noise.
+* **k = 5 significantly reduced Context Precision** (0.7283 → 0.4652), indicating that extra retrieved context was often irrelevant to the final answer.
+* While **k = 3 achieved the highest Faithfulness score**, the improvement was marginal compared to the substantial drop in Context Precision.
+* These results demonstrate that retrieving more context does not necessarily improve answer quality and can negatively impact grounding and relevance.
+
+### Best Configuration (k = 2)
+
+```text
+Retrieval Recall@10 = 0.9783
+Answer Similarity   = 0.8632
+Faithfulness        = 0.7563
+Context Precision   = 0.7283
+```
+
+The evaluation framework measures:
+
+* Retrieval Recall
+* Answer Similarity
+* Faithfulness
+* Context Precision
+
+allowing retrieval and generation quality to be monitored throughout development.
+
+### Key Observation
+
+Hybrid retrieval consistently outperformed both dense retrieval and BM25 individually:
+
+```text
+Dense Retrieval      → 84.78%
+BM25 Retrieval       → 91.30%
+Hybrid Retrieval     → 97.83%
+```
+
+This validates the effectiveness of combining lexical and semantic retrieval with fusion and reranking.
+
+### Additional Observation
+
+The combination of:
+
+* Parent-Child Retrieval
+* BM25 Sparse Retrieval
+* Dense Vector Retrieval (Qdrant + BGE Embeddings)
+* Reciprocal Rank Fusion (RRF)
+* Cross-Encoder Reranking
+
+enabled the system to achieve **97.83% Parent Recall@10** while maintaining strong answer quality and grounding across the benchmark dataset.
+
+
 # System Architecture
 
 ![Architecture](assets/architecture.png)
