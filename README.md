@@ -400,15 +400,27 @@ The system combines dense retrieval, sparse retrieval, Reciprocal Rank Fusion (R
 
 # Results Snapshot
 
-| Metric                  | Value  |
-| ----------------------- | ------ |
-| Parent Recall@10        | ~92%   |
-| Retrieval Recall@10     | 91.78% |
-| Answer Similarity       | 0.8452 |
-| Faithfulness            | 0.8293 |
-| Context Precision       | 0.5388 |
-| Research Papers Indexed | 10     |
-| Benchmark Questions     | 100    |
+| Metric                  | Value        |
+| ----------------------- | ------------ |
+| BM25 Recall@10          | 91.30%       |
+| Dense Recall@10         | 84.78%       |
+| Hybrid Parent Recall@10 | **97.83%**   |
+| Answer Similarity       | 0.8602       |
+| Faithfulness            | 0.7732       |
+| Context Precision       | 0.6159       |
+| Research Papers Indexed | 10           |
+| Corpus Size             | 3,396 Chunks |
+| Benchmark Questions     | 46           |
+
+### Retrieval Performance
+
+| Retriever                                        | Recall@10  |
+| ------------------------------------------------ | ---------- |
+| Dense Retrieval (Qdrant + BGE)                   | 84.78%     |
+| BM25                                             | 91.30%     |
+| Hybrid Retrieval + RRF + Cross-Encoder Reranking | **97.83%** |
+
+The final hybrid pipeline combines sparse retrieval, dense retrieval, Reciprocal Rank Fusion (RRF), parent-child retrieval, and cross-encoder reranking. This architecture improved retrieval performance beyond either retrieval method individually while maintaining strong answer quality and grounding.
 
 ---
 
