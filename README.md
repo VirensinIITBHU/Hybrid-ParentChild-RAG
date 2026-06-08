@@ -14,7 +14,7 @@
 
 ## Chat Query
 
-![Chat Demo](assets/chat_demo.png)
+![Chat Demo](assets/query_rewrite_demo.png)
 
 
 A production-oriented Retrieval-Augmented Generation (RAG) system featuring hybrid retrieval, parent-child chunking, cross-encoder reranking, query routing, conversational query rewriting, and custom RAG evaluation.
