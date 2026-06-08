@@ -1,0 +1,301 @@
+{
+    "samples": [
+        {
+            "question": "What statement did Joaquin Phoenix make at the Golden Globes?",
+            "ground_truth": "Joaquin Phoenix made headlines when he appeared on the red carpet at the Golden Globes wearing a tuxedo with a paper bag over his head that read, \"I am a shape-shifter. I can't change the world. I can only change myself.\"",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 419,
+            "parent_id": 128,
+            "chunk_text": "written article (accuracy: 12%).\nTitle:\nStar’s Tux Promise Draws Megyn Kelly’s Sarcasm\nSubtitle:\nJoaquin Phoenix pledged to not change for each awards event\nArticle:\nA year ago, Joaquin Phoenix made headlines when he appeared on\nthe red carpet at the Golden Globes wearing a tuxedo with a paper bag over\nhis head that read, \"I am a shape-shifter.\nI can't change the world.\nI\ncan only change myself.\" It was a promise to not change to fit into the\nHollywood mold:"
+        },
+        {
+            "question": "What promise did Joaquin Phoenix make regarding awards events?",
+            "ground_truth": "Joaquin Phoenix pledged to not change for each awards event",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 419,
+            "parent_id": 128,
+            "chunk_text": "written article (accuracy: 12%).\nTitle:\nStar’s Tux Promise Draws Megyn Kelly’s Sarcasm\nSubtitle:\nJoaquin Phoenix pledged to not change for each awards event\nArticle:\nA year ago, Joaquin Phoenix made headlines when he appeared on\nthe red carpet at the Golden Globes wearing a tuxedo with a paper bag over\nhis head that read, \"I am a shape-shifter.\nI can't change the world.\nI\ncan only change myself.\" It was a promise to not change to fit into the\nHollywood mold:"
+        },
+        {
+            "question": "What does the diﬀerent colors symbolize in the context of cores?",
+            "ground_truth": "have diﬀerent tokens across cores, which is what the diﬀerent colors symbolize.",
+            "paper_title": "Switch Transformers Scaling to Trillion Parameter Models",
+            "chunk_id": 1728,
+            "parent_id": 524,
+            "chunk_text": "have diﬀerent properties of allowing each core to either have the same tokens or\ndiﬀerent tokens across cores, which is what the diﬀerent colors symbolize.\n5.3 Model and Data Parallelism\nIt is common to mix both model and data parallelism for large scale models, which was done\nin the largest T5 models (Raﬀel et al., 2019; Xue et al., 2020) and in GPT-3 (Brown et al.,\n2020). With a total of N = n × m cores, now each core will be responsible for B/n tokens"
+        },
+        {
+            "question": "How is parallelism typically achieved in large scale models?",
+            "ground_truth": "It is common to mix both model and data parallelism for large scale models, which was done in the largest T5 models (Raﬀel et al., 2019; Xue et al., 2020) and in GPT-3 (Brown et al., 2020).",
+            "paper_title": "Switch Transformers Scaling to Trillion Parameter Models",
+            "chunk_id": 1728,
+            "parent_id": 524,
+            "chunk_text": "have diﬀerent properties of allowing each core to either have the same tokens or\ndiﬀerent tokens across cores, which is what the diﬀerent colors symbolize.\n5.3 Model and Data Parallelism\nIt is common to mix both model and data parallelism for large scale models, which was done\nin the largest T5 models (Raﬀel et al., 2019; Xue et al., 2020) and in GPT-3 (Brown et al.,\n2020). With a total of N = n × m cores, now each core will be responsible for B/n tokens"
+        },
+        {
+            "question": "What is the purpose of using a softmax-temperature in the training process?",
+            "ground_truth": "This objective results in a rich training signal by leveraging the full teacher distribution.",
+            "paper_title": "DistilBERT a distilled version of BERT smaller faster cheaper nd lighter",
+            "chunk_id": 130,
+            "parent_id": 41,
+            "chunk_text": "i ti ∗log(si) where ti (resp. si) is a probability estimated by the teacher\n(resp. the student). This objective results in a rich training signal by leveraging the full teacher\ndistribution. Following Hinton et al. [2015] we used a softmax-temperature: pi =\nexp(zi/T )\nP\nj exp(zj/T )\nwhere T controls the smoothness of the output distribution and zi is the model score for the class i.\nThe same temperature T is applied to the student and the teacher at training time, while at inference,"
+        },
+        {
+            "question": "How is the softmax-temperature calculated?",
+            "ground_truth": "pi = exp(zi/T ) / P j exp(zj/T )",
+            "paper_title": "DistilBERT a distilled version of BERT smaller faster cheaper nd lighter",
+            "chunk_id": 130,
+            "parent_id": 41,
+            "chunk_text": "i ti ∗log(si) where ti (resp. si) is a probability estimated by the teacher\n(resp. the student). This objective results in a rich training signal by leveraging the full teacher\ndistribution. Following Hinton et al. [2015] we used a softmax-temperature: pi =\nexp(zi/T )\nP\nj exp(zj/T )\nwhere T controls the smoothness of the output distribution and zi is the model score for the class i.\nThe same temperature T is applied to the student and the teacher at training time, while at inference,"
+        },
+        {
+            "question": "How is the self-attention sub-layer in the decoder stack modified?",
+            "ground_truth": "We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.",
+            "paper_title": "Attention is all you need",
+            "chunk_id": 26,
+            "parent_id": 8,
+            "chunk_text": "around each of the sub-layers, followed by layer normalization. We also modify the self-attention\nsub-layer in the decoder stack to prevent positions from attending to subsequent positions. This\nmasking, combined with fact that the output embeddings are offset by one position, ensures that the\npredictions for position i can depend only on the known outputs at positions less than i.\n3.2\nAttention\nAn attention function can be described as mapping a query and a set of key-value pairs to an output,"
+        },
+        {
+            "question": "What is the purpose of the masking in the self-attention sub-layer?",
+            "ground_truth": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.",
+            "paper_title": "Attention is all you need",
+            "chunk_id": 26,
+            "parent_id": 8,
+            "chunk_text": "around each of the sub-layers, followed by layer normalization. We also modify the self-attention\nsub-layer in the decoder stack to prevent positions from attending to subsequent positions. This\nmasking, combined with fact that the output embeddings are offset by one position, ensures that the\npredictions for position i can depend only on the known outputs at positions less than i.\n3.2\nAttention\nAn attention function can be described as mapping a query and a set of key-value pairs to an output,"
+        },
+        {
+            "question": "What is shown in Figure 30?",
+            "ground_truth": "Metadata ratings as a function of model type and model size",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3300,
+            "parent_id": 999,
+            "chunk_text": "1.3B\n6B\n175B\n0.6\n0.7\n0.8\n0.9\nPrevalence\nAttempts correct instruction\nModel\nPPO-ptx\nPPO\nSFT\nGPT\n(prompted)\nGPT\n1.3B\n6B\n175B\n0.80\n0.85\n0.90\n0.95\nAppropriate for customer assistant\n1.3B\n6B\n175B\n0.2\n0.4\n0.6\nFollows explicit constraints\n1.3B\n6B\n175B\nModel size\n0\n0.2\n0.4\n0.6\nHallucinations\nFigure 30: Metadata ratings as a function of model type and model size\nE.4\nLikert scores\nIn Figure 31, we show Likert scores for each of our models on our prompt distribution. The results"
+        },
+        {
+            "question": "What type of scores are shown in Figure 31?",
+            "ground_truth": "Likert scores",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3300,
+            "parent_id": 999,
+            "chunk_text": "1.3B\n6B\n175B\n0.6\n0.7\n0.8\n0.9\nPrevalence\nAttempts correct instruction\nModel\nPPO-ptx\nPPO\nSFT\nGPT\n(prompted)\nGPT\n1.3B\n6B\n175B\n0.80\n0.85\n0.90\n0.95\nAppropriate for customer assistant\n1.3B\n6B\n175B\n0.2\n0.4\n0.6\nFollows explicit constraints\n1.3B\n6B\n175B\nModel size\n0\n0.2\n0.4\n0.6\nHallucinations\nFigure 30: Metadata ratings as a function of model type and model size\nE.4\nLikert scores\nIn Figure 31, we show Likert scores for each of our models on our prompt distribution. The results"
+        },
+        {
+            "question": "What issue has pushed the church toward the brink of a schism?",
+            "ground_truth": "the role of LGBTQ people in the church",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 418,
+            "parent_id": 128,
+            "chunk_text": "\"pushed toward the brink of a schism over the role of LGBTQ people in the\nchurch.\" Gay marriage is not the only issue that has divided the church.\nIn\n2016, the denomination was split over ordination of transgender clergy, with\nthe North Pacific regional conference voting to ban them from serving as\nclergy, and the South Pacific regional conference voting to allow them.\nFigure 3.14: The GPT-3 generated news article that humans had the greatest difﬁculty distinguishing from a human"
+        },
+        {
+            "question": "What was the North Pacific regional conference's decision on ordination of transgender clergy in 2016?",
+            "ground_truth": "the North Pacific regional conference voting to ban them from serving as clergy",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 418,
+            "parent_id": 128,
+            "chunk_text": "\"pushed toward the brink of a schism over the role of LGBTQ people in the\nchurch.\" Gay marriage is not the only issue that has divided the church.\nIn\n2016, the denomination was split over ordination of transgender clergy, with\nthe North Pacific regional conference voting to ban them from serving as\nclergy, and the South Pacific regional conference voting to allow them.\nFigure 3.14: The GPT-3 generated news article that humans had the greatest difﬁculty distinguishing from a human"
+        },
+        {
+            "question": "What is used as the KL reward model in the experiments?",
+            "ground_truth": "The pretrained GPT model is used as the KL reward model, in these experiments.",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3305,
+            "parent_id": 1000,
+            "chunk_text": "results are shown in Figure 34. The pretrained GPT model is used as the KL reward model, in\nthese experiments. We ﬁnd that even by increasing the KL reward coefﬁcient to 2.0, which is 100\ntimes of the default value, the regressions still cannot be ﬁxed. As expected, too large KL reward\ncoefﬁcient causes a signiﬁcant drop in the validation reward. This result demonstrates that pretraining\ndata distribution is critical for ﬁxing the regressions on the public NLP datasets and maintaining the"
+        },
+        {
+            "question": "What is the result of increasing the KL reward coefficient to 2.0?",
+            "ground_truth": "even by increasing the KL reward coefﬁcient to 2.0, the regressions still cannot be ﬁxed.",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3305,
+            "parent_id": 1000,
+            "chunk_text": "results are shown in Figure 34. The pretrained GPT model is used as the KL reward model, in\nthese experiments. We ﬁnd that even by increasing the KL reward coefﬁcient to 2.0, which is 100\ntimes of the default value, the regressions still cannot be ﬁxed. As expected, too large KL reward\ncoefﬁcient causes a signiﬁcant drop in the validation reward. This result demonstrates that pretraining\ndata distribution is critical for ﬁxing the regressions on the public NLP datasets and maintaining the"
+        },
+        {
+            "question": "What is critical for fixing the regressions on the public NLP datasets?",
+            "ground_truth": "pretraining data distribution is critical for ﬁxing the regressions on the public NLP datasets and maintaining the",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3305,
+            "parent_id": 1000,
+            "chunk_text": "results are shown in Figure 34. The pretrained GPT model is used as the KL reward model, in\nthese experiments. We ﬁnd that even by increasing the KL reward coefﬁcient to 2.0, which is 100\ntimes of the default value, the regressions still cannot be ﬁxed. As expected, too large KL reward\ncoefﬁcient causes a signiﬁcant drop in the validation reward. This result demonstrates that pretraining\ndata distribution is critical for ﬁxing the regressions on the public NLP datasets and maintaining the"
+        },
+        {
+            "question": "What advantage does Switch-Base provide compared to dense models?",
+            "ground_truth": "Switch-Base is more sample efficient and yields a 2.5x speedup.",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3166,
+            "parent_id": 955,
+            "chunk_text": "Use Case\nExample\ngeneration\nHere’s a message to me:\n—\n{email}\n—\nHere are some bullet points for a reply:\n—\n{message}\n—\nWrite a detailed reply\ngeneration\nThis is an article about how to write a cover letter when applying for jobs:\n—\nIt’s important to spend some time\ngeneration\nwrite rap lyrics on the topics mentioned in this news article:\n—-\n{article}\n—-\nrewrite\nThis is the summary of a Broadway play:\n\"\"\"\n{summary}\n\"\"\"\nThis is the outline of the commercial for that play:\n\"\"\"\nrewrite"
+        },
+        {
+            "question": "What is the main impact of the work described?",
+            "ground_truth": "The main impact of our work is enabling access to large models that previously could not fit into",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 953,
+            "parent_id": 289,
+            "chunk_text": "Class\nHardware\nGPU Memory\n8-bit\n16-bit\nEnterprise\n8x A100\n80 GB\nOPT-175B / BLOOM\nOPT-175B / BLOOM\nEnterprise\n8x A100\n40 GB\nOPT-175B / BLOOM\nOPT-66B\nAcademic server\n8x RTX 3090\n24 GB\nOPT-175B / BLOOM\nOPT-66B\nAcademic desktop\n4x RTX 3090\n24 GB\nOPT-66B\nOPT-30B\nPaid Cloud\nColab Pro\n15 GB\nOPT-13B\nGPT-J-6B\nFree Cloud\nColab\n12 GB\nT0/T5-11B\nGPT-2 1.3B\n7\nBroader Impacts\nThe main impact of our work is enabling access to large models that previously could not ﬁt into"
+        },
+        {
+            "question": "What type of hardware is used for Enterprise?",
+            "ground_truth": "8x A100",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 953,
+            "parent_id": 289,
+            "chunk_text": "Class\nHardware\nGPU Memory\n8-bit\n16-bit\nEnterprise\n8x A100\n80 GB\nOPT-175B / BLOOM\nOPT-175B / BLOOM\nEnterprise\n8x A100\n40 GB\nOPT-175B / BLOOM\nOPT-66B\nAcademic server\n8x RTX 3090\n24 GB\nOPT-175B / BLOOM\nOPT-66B\nAcademic desktop\n4x RTX 3090\n24 GB\nOPT-66B\nOPT-30B\nPaid Cloud\nColab Pro\n15 GB\nOPT-13B\nGPT-J-6B\nFree Cloud\nColab\n12 GB\nT0/T5-11B\nGPT-2 1.3B\n7\nBroader Impacts\nThe main impact of our work is enabling access to large models that previously could not ﬁt into"
+        },
+        {
+            "question": "What should one do to be really happy according to the passage?",
+            "ground_truth": "So throw away any hatred from your heart, and you’ll be really happy.",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 666,
+            "parent_id": 200,
+            "chunk_text": "If\nyou cannot stand the smell of the rotten potatoes for just two weeks, can\nyou imagine how heavy it would be to have the hatred in your heart for your\nlifetime?\nSo throw away any hatred from your heart, and you’ll be really\nhappy.\"\nQ: Which of the following is True according to the passage?\nA: If a kid hated four people,he or she had to carry four potatoes.\nQ: We can learn from the passage that we should\n.\nA: throw away the hatred inside\nQ: The children complained about"
+        },
+        {
+            "question": "What lesson can be learned from the passage?",
+            "ground_truth": "So throw away any hatred from your heart, and you’ll be really happy.",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 666,
+            "parent_id": 200,
+            "chunk_text": "If\nyou cannot stand the smell of the rotten potatoes for just two weeks, can\nyou imagine how heavy it would be to have the hatred in your heart for your\nlifetime?\nSo throw away any hatred from your heart, and you’ll be really\nhappy.\"\nQ: Which of the following is True according to the passage?\nA: If a kid hated four people,he or she had to carry four potatoes.\nQ: We can learn from the passage that we should\n.\nA: throw away the hatred inside\nQ: The children complained about"
+        },
+        {
+            "question": "What is the most populous municipality in Finland?",
+            "ground_truth": "Helsinki",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 700,
+            "parent_id": 210,
+            "chunk_text": "Q: what is the most populous municipality in Finland?\nA: Helsinki\nQ: how many people live there?\nA: 1.4 million in the metropolitan area\nQ: what percent of the foreign companies that operate in Finland are in\nHelsinki?\nA: 75%\nQ: what towns are a part of the metropolitan area?\nA:\nTarget Completion →\nHelsinki, Espoo, Vantaa, Kauniainen, and surrounding commuter towns\nFigure G.18: Formatted dataset example for CoQA\nContext →\nPlease unscramble the letters into a word, and write that word:\nasinoc ="
+        },
+        {
+            "question": "How many people live in the metropolitan area of Helsinki?",
+            "ground_truth": "1.4 million",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 700,
+            "parent_id": 210,
+            "chunk_text": "Q: what is the most populous municipality in Finland?\nA: Helsinki\nQ: how many people live there?\nA: 1.4 million in the metropolitan area\nQ: what percent of the foreign companies that operate in Finland are in\nHelsinki?\nA: 75%\nQ: what towns are a part of the metropolitan area?\nA:\nTarget Completion →\nHelsinki, Espoo, Vantaa, Kauniainen, and surrounding commuter towns\nFigure G.18: Formatted dataset example for CoQA\nContext →\nPlease unscramble the letters into a word, and write that word:\nasinoc ="
+        },
+        {
+            "question": "What 8-bit data type is currently supported by GPUs?",
+            "ground_truth": "it is currently the only 8-bit data type supported by GPUs. Other common data types are fixed point or floating point 8-bit data types (FP8).",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 938,
+            "parent_id": 285,
+            "chunk_text": "it is currently the only 8-bit data type supported by GPUs. Other common data types are ﬁxed\npoint or ﬂoating point 8-bit data types (FP8). These data types usually have a sign bit and different\nexponent and fraction bit combinations. For example, a common variant of this data type has 5\nbits for the exponent and 2 bits for the fraction (Wang et al., 2018; Sun et al., 2019; Cambier et al.,\n2020; Mellempudi et al., 2019) and uses either no scaling constants or zeropoint scaling. These data"
+        },
+        {
+            "question": "What components do fixed point or floating point 8-bit data types (FP8) typically have?",
+            "ground_truth": "These data types usually have a sign bit and different exponent and fraction bit combinations.",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 938,
+            "parent_id": 285,
+            "chunk_text": "it is currently the only 8-bit data type supported by GPUs. Other common data types are ﬁxed\npoint or ﬂoating point 8-bit data types (FP8). These data types usually have a sign bit and different\nexponent and fraction bit combinations. For example, a common variant of this data type has 5\nbits for the exponent and 2 bits for the fraction (Wang et al., 2018; Sun et al., 2019; Cambier et al.,\n2020; Mellempudi et al., 2019) and uses either no scaling constants or zeropoint scaling. These data"
+        },
+        {
+            "question": "How have jobless claims changed recently?",
+            "ground_truth": "Jobless claims have increased from 860,000 to 870,000.",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3366,
+            "parent_id": 1021,
+            "chunk_text": "-Jobless claims have increased from 860,000 to 870,000.\nGPT-3 175B completion:\nCorrespondingly, the number of people actively looking for work has been more than 1 million higher on a\nseasonally adjusted basis every week since mid-May than it was at the beginning of the pandemic. More\nthan 8 million people have been out of work for at least 27 weeks, the most since data collection began in\n1948.\nThe number of people who have been out of work for six months or more has remained at more than 2"
+        },
+        {
+            "question": "What is the current trend in the number of people out of work for at least 27 weeks?",
+            "ground_truth": "More than 8 million people have been out of work for at least 27 weeks, the most since data collection began in 1948.",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3366,
+            "parent_id": 1021,
+            "chunk_text": "-Jobless claims have increased from 860,000 to 870,000.\nGPT-3 175B completion:\nCorrespondingly, the number of people actively looking for work has been more than 1 million higher on a\nseasonally adjusted basis every week since mid-May than it was at the beginning of the pandemic. More\nthan 8 million people have been out of work for at least 27 weeks, the most since data collection began in\n1948.\nThe number of people who have been out of work for six months or more has remained at more than 2"
+        },
+        {
+            "question": "What is shown in Figure 29?",
+            "ground_truth": "Figure 29: Few-shot performance of our models on various public NLP datasets (compare to zero-shot performance shown in Figure 28",
+            "paper_title": "Training language models to follow instructions",
+            "chunk_id": 3297,
+            "parent_id": 998,
+            "chunk_text": "25\n30\n35\nDROP (F1)\n \nPPO-ptx\nPPO\nSFT\nGPT\n0.5\n0.6\n0.7\n0.8\nHellaswag (acc)\n30\n35\n40\n45\n50\nQuAC (F1)\n0.5\n0.6\n0.7\n0.8\nRTE v2 (acc)\n0.80\n0.85\n0.90\n0.95\nSST (acc)\n45\n50\n55\n60\n65\n70\nSquad V2 (F1)\n1.3B\n6B\n175B\n25\n30\n35\n40\nTranslate Fr => En (BLEU)\n1.3B\n6B\n175B\n \n0.5\n0.6\n0.7\n0.8\nWinograd (acc)\nFigure 29: Few-shot performance of our models on various public NLP datasets (compare to zero-shot\nperformance shown in Figure 28\nE.2\nReward model generalization across sets of labelers"
+        },
+        {
+            "question": "At what parameter scale do large features with magnitudes up to 20x larger than in other dimensions first appear in transformer layers?",
+            "ground_truth": "To this end, we provide a new descriptive analysis which shows that large features with magnitudes up to 20x larger than in other dimensions first appear in about 25% of all transformer layers and then gradually spread to other layers as we scale transformers to 6B parameters.",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 864,
+            "parent_id": 262,
+            "chunk_text": "dimensions of the hidden states during infer-\nence. To this end, we provide a new descriptive\nanalysis which shows that large features with\nmagnitudes up to 20x larger than in other di-\nmensions ﬁrst appear in about 25% of all trans-\nformer layers and then gradually spread to other\nlayers as we scale transformers to 6B parame-\nters. At around 6.7B parameters, a phase shift\noccurs, and all transformer layers and 75% of\nall sequence dimensions are affected by extreme"
+        },
+        {
+            "question": "What percentage of all sequence dimensions are affected by extreme features at around 6.7B parameters?",
+            "ground_truth": "At around 6.7B parameters, a phase shift occurs, and all transformer layers and 75% of all sequence dimensions are affected by extreme features.",
+            "paper_title": "LLM.int8() 8‑bit Matrix Multiplication for Transformers at Scale (Dettmers et al., 2022)",
+            "chunk_id": 864,
+            "parent_id": 262,
+            "chunk_text": "dimensions of the hidden states during infer-\nence. To this end, we provide a new descriptive\nanalysis which shows that large features with\nmagnitudes up to 20x larger than in other di-\nmensions ﬁrst appear in about 25% of all trans-\nformer layers and then gradually spread to other\nlayers as we scale transformers to 6B parame-\nters. At around 6.7B parameters, a phase shift\noccurs, and all transformer layers and 75% of\nall sequence dimensions are affected by extreme"
+        },
+        {
+            "question": "What is the hypothesis regarding the updates to the weights during adaptation?",
+            "ground_truth": "we hypothesize the updates to the weights also have a low intrinsic rank during adaptation.",
+            "paper_title": "LORA LOW-RANK ADAPTATION OF LARGE LANGUAGEMODELS",
+            "chunk_id": 1084,
+            "parent_id": 328,
+            "chunk_text": "(2020) shows that the pre-trained language models have a low “instrisic dimension” and can still\nlearn efﬁciently despite a random projection to a smaller subspace. Inspired by this, we hypothe-\nsize the updates to the weights also have a low “intrinsic rank” during adaptation. For a pre-trained\nweight matrix W0 ∈Rd×k, we constrain its update by representing the latter with a low-rank de-\ncomposition W0 + ∆W = W0 + BA, where B ∈Rd×r, A ∈Rr×k, and the rank r ≪min(d, k)."
+        },
+        {
+            "question": "How is the update to the pre-trained weight matrix W0 constrained?",
+            "ground_truth": "by representing the latter with a low-rank decomposition W0 + ∆W = W0 + BA, where B ∈Rd×r, A ∈Rr×k, and the rank r ≪min(d, k).",
+            "paper_title": "LORA LOW-RANK ADAPTATION OF LARGE LANGUAGEMODELS",
+            "chunk_id": 1084,
+            "parent_id": 328,
+            "chunk_text": "(2020) shows that the pre-trained language models have a low “instrisic dimension” and can still\nlearn efﬁciently despite a random projection to a smaller subspace. Inspired by this, we hypothe-\nsize the updates to the weights also have a low “intrinsic rank” during adaptation. For a pre-trained\nweight matrix W0 ∈Rd×k, we constrain its update by representing the latter with a low-rank de-\ncomposition W0 + ∆W = W0 + BA, where B ∈Rd×r, A ∈Rr×k, and the rank r ≪min(d, k)."
+        },
+        {
+            "question": "What is the limitation of adapter layers in terms of processing?",
+            "ground_truth": "Adapter layers have to be processed sequentially.",
+            "paper_title": "LORA LOW-RANK ADAPTATION OF LARGE LANGUAGEMODELS",
+            "chunk_id": 1076,
+            "parent_id": 325,
+            "chunk_text": "to have few parameters (sometimes <1% of the original model) by having a small bottleneck di-\nmension, which limits the FLOPs they can add. However, large neural networks rely on hardware\nparallelism to keep the latency low, and adapter layers have to be processed sequentially. This makes\na difference in the online inference setting where the batch size is typically as small as one. In a\ngeneric scenario without model parallelism, such as running inference on GPT-2 (Radford et al., b)"
+        },
+        {
+            "question": "Why do large neural networks rely on hardware parallelism?",
+            "ground_truth": "Large neural networks rely on hardware parallelism to keep the latency low.",
+            "paper_title": "LORA LOW-RANK ADAPTATION OF LARGE LANGUAGEMODELS",
+            "chunk_id": 1076,
+            "parent_id": 325,
+            "chunk_text": "to have few parameters (sometimes <1% of the original model) by having a small bottleneck di-\nmension, which limits the FLOPs they can add. However, large neural networks rely on hardware\nparallelism to keep the latency low, and adapter layers have to be processed sequentially. This makes\na difference in the online inference setting where the batch size is typically as small as one. In a\ngeneric scenario without model parallelism, such as running inference on GPT-2 (Radford et al., b)"
+        },
+        {
+            "question": "What is the tone of the poem describing the town?",
+            "ground_truth": "Never the bobbing of covered carts, Those island gardens, deep in the mind, Never the creak passed on the stair Make of remoteness familiarity Closing some other life; an old man And of the unspoken name a friend.",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 647,
+            "parent_id": 195,
+            "chunk_text": "Never the bobbing of covered carts,\nThose island gardens, deep in the mind,\nNever the creak passed on the stair\nMake of remoteness familiarity\nClosing some other life; an old man\nAnd of the unspoken name a friend.\nCan prosper in that town, can prosper\nWhen his store is seen to close, his wife\n-------- Generated Poem 4 --------\nFades in his house, and the world shouts in vain\nThat no one comes to hear him\nNobody will come to this place.\nIt is a road that leads nowhere."
+        },
+        {
+            "question": "What happens when the old man's store is seen to close?",
+            "ground_truth": "When his store is seen to close, his wife Fades in his house, and the world shouts in vain That no one comes to hear him",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 647,
+            "parent_id": 195,
+            "chunk_text": "Never the bobbing of covered carts,\nThose island gardens, deep in the mind,\nNever the creak passed on the stair\nMake of remoteness familiarity\nClosing some other life; an old man\nAnd of the unspoken name a friend.\nCan prosper in that town, can prosper\nWhen his store is seen to close, his wife\n-------- Generated Poem 4 --------\nFades in his house, and the world shouts in vain\nThat no one comes to hear him\nNobody will come to this place.\nIt is a road that leads nowhere."
+        },
+        {
+            "question": "Who owns and operates the Gold Coast Hotel & Casino?",
+            "ground_truth": "The Gold Coast is owned and operated by Boyd Gaming.",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 661,
+            "parent_id": 199,
+            "chunk_text": "Context →\nanli 2:\nanli 2:\nThe Gold Coast Hotel & Casino is a hotel and casino\nlocated in Paradise, Nevada.\nThis locals’ casino is owned and operated\nby Boyd Gaming.\nThe Gold Coast is located one mile (∼\n1.6km) west of the\nLas Vegas Strip on West Flamingo Road.\nIt is located across the street\nfrom the Palms Casino Resort and the Rio All Suite Hotel and Casino.\nQuestion:\nThe Gold Coast is a budget-friendly casino.\nTrue, False, or\nNeither?\nCorrect Answer →\nNeither\nIncorrect Answer →\nTrue"
+        },
+        {
+            "question": "Where is the Gold Coast Hotel & Casino located?",
+            "ground_truth": "The Gold Coast is located one mile (∼ 1.6km) west of the Las Vegas Strip on West Flamingo Road.",
+            "paper_title": "language Models are few shot learners",
+            "chunk_id": 661,
+            "parent_id": 199,
+            "chunk_text": "Context →\nanli 2:\nanli 2:\nThe Gold Coast Hotel & Casino is a hotel and casino\nlocated in Paradise, Nevada.\nThis locals’ casino is owned and operated\nby Boyd Gaming.\nThe Gold Coast is located one mile (∼\n1.6km) west of the\nLas Vegas Strip on West Flamingo Road.\nIt is located across the street\nfrom the Palms Casino Resort and the Rio All Suite Hotel and Casino.\nQuestion:\nThe Gold Coast is a budget-friendly casino.\nTrue, False, or\nNeither?\nCorrect Answer →\nNeither\nIncorrect Answer →\nTrue"
+        }
+
+    ]
+}
