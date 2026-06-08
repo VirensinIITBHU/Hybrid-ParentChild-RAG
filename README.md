@@ -213,7 +213,8 @@ Evaluates the complete pipeline using:
 ## Step 1: Ingest Documents
 
 Run ingestion:
-
+NOTE: Ingesting is optional you can use preloaded chunks.pkl if you want to use existing Benchmark suite
+if so You can directly run **emmbed** command from step 2
 ```bash
 python main.py --mode ingest
 ```
