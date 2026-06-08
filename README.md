@@ -202,6 +202,13 @@ Used to test routing decisions and ambiguity handling.
 
 ## Hybrid Retrieval Evaluation
 
+Before any evalution you have to create a dataset , existing dataset witll not work when you will re ingest the data, ids will get rewritten
+
+
+```bash
+python -u creatingQues.py
+```
+
 ```bash
 python main.py --mode eval
 ```
