@@ -17,6 +17,217 @@
 ![Chat Demo](assets/query_rewrite_demo.png)
 
 
+
+# Quick Start
+
+## Clone Repository
+
+```bash
+git clone https://github.com/VirensinIITBHU/Hybrid-ParentChild-RAG.git
+cd Hybrid-ParentChild-RAG
+```
+
+## Create Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+Activate:
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### Linux / Mac
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+OPEN_ROUTER_KEY=your_openrouter_api_key
+
+QDRANT_URL=your_qdrant_url
+QDRANT_API_KEY=your_qdrant_api_key
+```
+
+---
+
+## Add Research Papers
+
+Place PDF documents inside:
+
+```text
+documents/
+```
+
+The project was tested on research papers such as:
+
+* Attention Is All You Need
+* DistilBERT
+* GPT-3
+* LoRA
+* Switch Transformers
+
+---
+
+## Build the Knowledge Base
+
+Run ingestion:
+
+```bash
+python main.py --mode ingest
+```
+
+This will:
+
+* Extract text from PDFs
+* Create parent chunks
+* Create child chunks
+* Generate embeddings
+* Upload vectors to Qdrant Cloud
+* Build retrieval indexes
+
+---
+
+# Running the System
+
+## Chat Interface
+
+```bash
+python main.py --mode chat
+```
+
+Example:
+
+```text
+You: What is attention?
+
+[Route] RETRIEVE
+
+Sources:
+Attention is all you need | Page 1
+Attention is all you need | Page 2
+
+Assistant:
+Attention is a mechanism that allows a model to focus on relevant parts of the input...
+```
+
+---
+
+## Dense Retrieval Test
+
+```bash
+python main.py --mode dense
+```
+
+Used to inspect dense retrieval results directly.
+
+---
+
+## BM25 Retrieval Test
+
+```bash
+python main.py --mode bm25
+```
+
+Used to inspect sparse retrieval results directly.
+
+---
+
+## Hybrid Retrieval Test
+
+```bash
+python main.py --mode hybrid
+```
+
+Runs:
+
+* Dense Retrieval
+* BM25 Retrieval
+* RRF Fusion
+* Parent Mapping
+* Cross-Encoder Reranking
+
+and displays the final retrieved contexts.
+
+---
+
+## Query Router Test
+
+```bash
+python main.py --mode router
+```
+
+Used to test routing decisions and ambiguity handling.
+
+---
+
+# Evaluation
+
+## Hybrid Retrieval Evaluation
+
+```bash
+python main.py --mode eval
+```
+
+Evaluates retrieval quality using the benchmark dataset.
+
+---
+
+## Mini-RAGAS Evaluation
+
+```bash
+python main.py --mode ragas
+```
+
+Example Output:
+
+```text
+MINI RAGAS V2
+
+Retrieval Recall@10 = 91.78%
+
+Answer Similarity = 0.8452
+
+Faithfulness = 0.8293
+
+Context Precision = 0.5388
+```
+
+---
+
+# Available Modes
+
+```text
+python main.py --mode ingest
+python main.py --mode chat
+python main.py --mode dense
+python main.py --mode bm25
+python main.py --mode hybrid
+python main.py --mode router
+python main.py --mode eval
+python main.py --mode ragas
+```
+
+
 A production-oriented Retrieval-Augmented Generation (RAG) system featuring hybrid retrieval, parent-child chunking, cross-encoder reranking, query routing, conversational query rewriting, and custom RAG evaluation.
 
 Rather than focusing only on answer generation, this project focuses on the harder engineering problem:
