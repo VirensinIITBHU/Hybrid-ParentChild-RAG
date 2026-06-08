@@ -88,7 +88,9 @@ The project was tested on research papers such as:
 
 ---
 
-## Build the Knowledge Base
+# Build the Knowledge Base
+
+## Step 1: Ingest Documents
 
 Run ingestion:
 
@@ -96,20 +98,36 @@ Run ingestion:
 python main.py --mode ingest
 ```
 
-This will:
+This step:
 
-* Extract text from PDFs
-* Create parent chunks
-* Create child chunks
-* Generate embeddings
-* Upload vectors to Qdrant Cloud
-* Build retrieval indexes
+* Extracts text from PDFs
+* Creates parent chunks
+* Creates child chunks
+* Stores processed chunks for retrieval
+
+---
+
+## Step 2: Generate Embeddings and Index Data
+
+Run embedding generation:
+
+```bash
+python main.py --mode embed
+```
+
+This step:
+
+* Converts chunks into dense vector embeddings
+* Uploads vectors to Qdrant Cloud
+* Builds the retrieval index used during search
 
 ---
 
 # Running the System
 
 ## Chat Interface
+
+Once ingestion and embedding generation are complete, start the chatbot:
 
 ```bash
 python main.py --mode chat
@@ -218,6 +236,7 @@ Context Precision = 0.5388
 
 ```text
 python main.py --mode ingest
+python main.py --mode embed
 python main.py --mode chat
 python main.py --mode dense
 python main.py --mode bm25
@@ -226,6 +245,9 @@ python main.py --mode router
 python main.py --mode eval
 python main.py --mode ragas
 ```
+
+
+---
 
 
 A production-oriented Retrieval-Augmented Generation (RAG) system featuring hybrid retrieval, parent-child chunking, cross-encoder reranking, query routing, conversational query rewriting, and custom RAG evaluation.
