@@ -90,6 +90,126 @@ The project was tested on research papers such as:
 
 # Build the Knowledge Base
 
+# Getting Started
+
+The normal workflow is:
+
+```text
+1. Add PDFs
+        ↓
+2. Ingest Documents
+        ↓
+3. Generate Embeddings
+        ↓
+4. Chat / Retrieve
+```
+
+Evaluation is optional and only needed if you want to benchmark retrieval or answer quality.
+
+---
+
+# Step 1: Ingest Documents
+
+```bash
+python main.py --mode ingest
+```
+
+This step:
+
+* Extracts text from PDFs
+* Creates parent chunks
+* Creates child chunks
+* Stores chunk metadata
+
+---
+
+# Step 2: Generate Embeddings
+
+```bash
+python main.py --mode embed
+```
+
+This step:
+
+* Generates dense embeddings
+* Uploads vectors to Qdrant
+* Builds the retrieval index
+
+---
+
+# Step 3: Start Chatting
+
+```bash
+python main.py --mode chat
+```
+
+At this point the system is fully usable.
+
+You do **not** need benchmark generation or evaluation to use the chatbot.
+
+---
+
+# Optional: Evaluation
+
+Evaluation is only required if you want to measure retrieval quality or compare retrieval strategies.
+
+## Generate Benchmark Dataset
+
+```bash
+python creatingQues.py
+```
+
+The benchmark generation pipeline uses an LLM to create:
+
+* Questions
+* Ground-truth answers
+* Question types
+* Source chunk mappings
+* Parent chunk mappings
+
+### Important
+
+If you re-run ingestion, chunk IDs may change.
+
+In that case regenerate the benchmark:
+
+```bash
+python creatingQues.py
+```
+
+If you are evaluating the same indexed corpus, you can reuse the existing benchmark dataset and skip benchmark generation.
+
+---
+
+## Retrieval Evaluation
+
+```bash
+python main.py --mode eval
+```
+
+Evaluates:
+
+* Dense Retrieval
+* BM25 Retrieval
+* Hybrid Retrieval
+* Parent Recall@K
+
+---
+
+## RAG Evaluation
+
+```bash
+python main.py --mode ragas
+```
+
+Evaluates the complete pipeline using:
+
+* Retrieval Recall
+* Answer Similarity
+* Faithfulness
+* Context Precision
+
+
 ## Step 1: Ingest Documents
 
 Run ingestion:
