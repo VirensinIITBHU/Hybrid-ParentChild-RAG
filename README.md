@@ -1,0 +1,668 @@
+# Hybrid-ParentChild-RAG
+
+# System Architecture
+
+![Architecture](assets/architecture.png)
+
+
+
+# Demo
+
+## Retrieval Query
+
+![Retrieval Demo](assets/retrieval_demo.png)
+
+## Chat Query
+
+![Chat Demo](assets/chat_demo.png)
+
+
+A production-oriented Retrieval-Augmented Generation (RAG) system featuring hybrid retrieval, parent-child chunking, cross-encoder reranking, query routing, conversational query rewriting, and custom RAG evaluation.
+
+Rather than focusing only on answer generation, this project focuses on the harder engineering problem:
+
+> How do we know whether a RAG system is retrieving the right information, ranking it correctly, and generating faithful answers?
+
+The system combines dense retrieval, sparse retrieval, Reciprocal Rank Fusion (RRF), parent-child chunking, cross-encoder reranking, conversational query rewriting, and a custom Mini-RAGAS evaluation framework.
+
+---
+
+# Results Snapshot
+
+| Metric                  | Value  |
+| ----------------------- | ------ |
+| Parent Recall@10        | ~92%   |
+| Retrieval Recall@10     | 91.78% |
+| Answer Similarity       | 0.8452 |
+| Faithfulness            | 0.8293 |
+| Context Precision       | 0.5388 |
+| Research Papers Indexed | 10     |
+| Benchmark Questions     | 100    |
+
+---
+
+# Motivation
+
+Most RAG tutorials stop at:
+
+```text
+User Query
+   ↓
+Vector Database
+   ↓
+LLM
+   ↓
+Answer
+```
+
+However, production RAG systems face much harder challenges:
+
+* Building a reliable ingestion pipeline
+* Retrieval failures
+* Ranking failures
+* Ambiguous conversational queries
+* Hallucinations
+* Evaluation reliability
+* Context selection
+
+This project was built to understand and solve those challenges through iterative experimentation, benchmarking, and evaluation.
+
+---
+
+# Dataset
+
+The system was evaluated on a collection of 10 research papers including:
+
+* Attention Is All You Need
+* DistilBERT
+* Language Models are Few-Shot Learners (GPT-3)
+* LoRA
+* Switch Transformers
+* RAG Fusion
+* Retrieval-Augmented Generation
+* Training Language Models to Follow Instructions
+* LLM.int8()
+* The Rise and Potential of Large Language Model Based Agents
+
+Documents are stored as PDFs and processed into hierarchical chunks for retrieval.
+
+---
+
+# Final System Architecture
+
+## Offline Indexing
+
+```text
+PDF Papers
+     │
+     ▼
+PyMuPDF Loader
+     │
+     ▼
+Parent Chunking (~1500 chars)
+     │
+     ▼
+Child Chunking (~500 chars)
+     │
+     ▼
+BGE-Small-EN Embeddings
+     │
+     ▼
+Qdrant Cloud
+(Dense Index)
+
+     +
+
+BM25 Index
+(Sparse Index)
+```
+
+---
+
+## Online Retrieval Pipeline
+
+```text
+User Query
+     │
+     ▼
+Rule Router
+     │
+     ├────────────► CHAT
+     │
+     ├────────────► RETRIEVE
+     │
+     └────────────► AMBIGUOUS
+                            │
+                            ▼
+                GPT-4o-mini Query Rewriter
+                            │
+                            ▼
+                    Standalone Query
+                            │
+                            ▼
+               Dense Retrieval (Top 20)
+                            +
+                BM25 Retrieval (Top 20)
+                            │
+                            ▼
+                     RRF Fusion
+                            │
+                            ▼
+                Child → Parent Mapping
+                            │
+                            ▼
+                  Unique Parent Chunks
+                            │
+                            ▼
+            Cross Encoder Reranker
+        (ms-marco-MiniLM-L-6-v2)
+                            │
+                            ▼
+                    Top 3 Parents
+                            │
+                            ▼
+                      GPT-4o-mini
+                            │
+                            ▼
+                      Final Answer
+```
+
+---
+
+# Why Parent-Child Retrieval?
+
+One of the main challenges in RAG systems is balancing retrieval precision with context quality.
+
+### Large Chunks
+
+Advantages:
+
+* Better context
+* More complete information
+
+Disadvantages:
+
+* Lower retrieval precision
+* Higher semantic noise
+
+### Small Chunks
+
+Advantages:
+
+* Better retrieval precision
+* More targeted retrieval
+
+Disadvantages:
+
+* Context fragmentation
+* Missing surrounding information
+
+To address this tradeoff:
+
+1. Retrieval is performed over child chunks.
+2. Retrieved children are mapped to parent chunks.
+3. Parent chunks are reranked.
+4. Top-ranked parents are sent to the LLM.
+
+This architecture improved context quality while maintaining retrieval precision.
+
+---
+
+# Engineering Challenges & Solutions
+
+## Problem 1 — Building a Reliable Ingestion Pipeline
+
+A retrieval system is only as good as the data it indexes.
+
+The project started by building an ingestion pipeline capable of processing research papers into a retrieval-friendly format.
+
+Pipeline:
+
+```text
+PDF
+ ↓
+Text Extraction
+ ↓
+Parent Chunk Creation
+ ↓
+Child Chunk Creation
+ ↓
+Embedding Generation
+ ↓
+Vector Storage
+```
+
+Instead of indexing a single chunk size, documents were split hierarchically:
+
+* Parent chunks for richer context
+* Child chunks for retrieval precision
+
+This design later enabled the parent-child retrieval architecture used in the final system.
+
+Future improvements include:
+
+* Better semantic chunking
+* Section-aware chunking
+* Table and figure extraction
+* Metadata enrichment
+* Citation-aware chunk boundaries
+
+---
+
+## Problem 2 — Measuring Retrieval Quality Correctly
+
+Initially, retrieval quality appeared worse than expected.
+
+After debugging the evaluation pipeline, the issue turned out to be the benchmark itself rather than the retriever.
+
+Problems discovered:
+
+* Case sensitivity mismatches
+* Formatting inconsistencies
+* Benchmark labeling issues
+
+Valid retrievals were occasionally marked as failures because of capitalization and formatting differences.
+
+A normalization layer was introduced to make evaluation more robust.
+
+### Key Lesson
+
+Poor metrics do not always imply poor retrieval.
+
+Sometimes the evaluation system is wrong.
+
+---
+
+## Problem 3 — Understanding Dense Retrieval Performance
+
+The first retrieval system used:
+
+* Qdrant Cloud
+* BGE embeddings
+* Dense vector search
+
+Instead of relying on intuition, retrieval quality was measured using:
+
+* Recall@K
+* Average Rank
+
+Results showed that the correct chunk was often retrieved near the top positions.
+
+Example:
+
+```text
+Recall@20 = 100% (on a benchmark built from paper-title retrieval queries)
+Average Rank = 1.46
+```
+
+Observed performance:
+
+```text
+Dense Recall@10 ≈ 84% 
+```
+
+The benchmark for this stage used strict child-level evaluation, meaning a retrieval was counted as correct only if the exact ground-truth child chunk appeared within the top-k results. Parent expansion was not considered during scoring, making this a more challenging and precise retrieval benchmark.
+
+---
+
+## Problem 4 — Exact Keyword Matching
+
+Dense retrieval performs well for semantic understanding but can miss exact terminology.
+
+Research papers often contain:
+
+* Technical terms
+* Acronyms
+* Model names
+* Exact phrases
+
+To address this, BM25 retrieval was added.
+
+Observed performance:
+
+```text
+BM25 Recall@10 ≈ 80%
+```
+
+This confirmed that sparse retrieval captured information that dense retrieval occasionally missed.
+
+---
+
+## Problem 5 — Combining Dense and Sparse Retrieval
+
+Neither dense retrieval nor BM25 consistently outperformed the other.
+
+Instead of choosing one approach, both were combined.
+
+Pipeline:
+
+```text
+Dense Retrieval
+        +
+BM25 Retrieval
+        ↓
+     RRF Fusion
+```
+
+Candidates are merged using Reciprocal Rank Fusion (RRF).
+
+Formula:
+
+```text
+RRF(d) = Σ 1 / (k + rank)
+```
+
+Several values of k were tested.
+
+After experimentation:
+
+```text
+RRF k = 60 
+```
+
+A larger k value makes the fusion smoother by reducing the influence of rank differences between documents. For example, with a small k (e.g., 10), a document ranked #1 receives significantly more weight than a document ranked #10. With a larger k (e.g., 60), the score differences become less extreme, allowing documents that consistently appear across multiple retrieval methods to be rewarded even if they are not ranked at the very top by any single retriever.
+
+In practice:
+
+```text
+k ↓  → More aggressive ranking, top positions dominate
+k ↑  → Smoother ranking, consensus across retrievers matters more
+```
+
+For this project, `k = 60` provided the best balance between rewarding highly ranked results and preserving agreement between dense and sparse retrieval outputs.
+
+provided the most stable performance.
+
+---
+
+## Problem 6 — Precision vs Context Tradeoff
+
+A major challenge in RAG systems is balancing retrieval precision with context quality.
+
+Large chunks improve context but hurt retrieval precision.
+
+Small chunks improve retrieval precision but lose context.
+
+To solve this, a parent-child retrieval architecture was implemented.
+
+```text
+Query
+  ↓
+Child Retrieval
+  ↓
+Parent Expansion
+  ↓
+Parent Reranking
+  ↓
+LLM
+```
+
+The system retrieves child chunks but sends parent chunks to the LLM.
+
+This significantly improved retrieval quality while preserving context.
+
+---
+
+## Problem 7 — Ranking Retrieved Documents
+
+Even after hybrid retrieval, ranking quality could still be improved.
+
+A cross-encoder reranker was introduced:
+
+```text
+cross-encoder/ms-marco-MiniLM-L-6-v2
+```
+
+Unlike embedding similarity, the reranker evaluates the query and document jointly.
+
+Results:
+
+```text
+BM25 Recall@10 ≈ 80%
+Dense Recall@10 ≈ 84%
+
+Hybrid + Reranker Recall@10 ≈ 92%
+```
+
+---
+
+## Problem 8 — Conversational Queries
+
+Not every user query requires retrieval.
+
+Examples:
+
+```text
+Hi
+How are you?
+Are you sure?
+```
+
+Retrieving documents for these queries wastes resources and can degrade response quality.
+
+To solve this, a routing layer was introduced.
+
+### Rule-Based Routing
+
+Detects:
+
+* Greetings
+* Small talk
+* Retrieval requests
+
+### GPT-4o-mini Query Rewriting
+
+Conversational references such as:
+
+```text
+it
+this
+that
+they
+them
+```
+
+are rewritten into standalone questions using conversation history.
+
+This significantly improved conversational retrieval quality.
+
+---
+
+## Problem 9 — Evaluating the Entire RAG Pipeline
+
+The original plan was to use RAGAS.
+
+However, installation issues with Python 3.14 prevented direct adoption.
+
+Instead of abandoning evaluation, a lightweight custom framework was built.
+
+Metrics implemented:
+
+* Retrieval Recall
+* Answer Similarity
+* Faithfulness
+* Context Precision
+
+This Mini-RAGAS framework enabled continuous evaluation of retrieval and generation quality throughout development.
+
+---
+
+## Problem 10 — Trust, Transparency, and Out-of-Scope Handling
+
+To improve trust and debuggability, the system exposes retrieval evidence alongside generated answers.
+
+Each response includes:
+
+* Source document information
+* Retrieved chunk references
+* Retrieval scores
+* Reranker scores
+
+This allows users to inspect exactly where information originated and verify whether an answer is grounded in the indexed knowledge base.
+
+### Out-of-Scope Fallback
+
+When relevant context cannot be confidently retrieved:
+
+1. The system informs the user that the answer is not grounded in the knowledge base.
+2. Retrieved evidence is not presented as supporting information.
+3. A general LLM-generated response is provided separately.
+
+### Key Lesson
+
+Confidence signals are an important part of the user experience.
+
+Showing citations, source papers, retrieved chunks, and relevance scores helps users distinguish retrieved knowledge from model knowledge.
+
+---
+
+# Model Evolution
+
+Multiple models were evaluated during development.
+
+## Embeddings
+
+* BAAI/bge-small-en-v1.5
+
+## Reranking
+
+* cross-encoder/ms-marco-MiniLM-L-6-v2
+
+## Generation
+
+Development:
+
+* Groq-hosted Llama models
+
+Final:
+
+* GPT-4o-mini via OpenRouter
+
+The migration from Groq to OpenRouter was primarily driven by evaluation workload and token-limit constraints encountered during large-scale benchmarking.
+
+---
+
+# Final Results
+
+The final benchmark consists of:
+
+* 10 research papers
+* 100 conceptual and interview-style questions
+
+## Parent Retrieval Evaluation
+
+```text
+Parent Recall@10 ≈ 92%
+```
+
+## Mini-RAGAS V2
+
+```text
+Retrieval Recall@10 = 91.78%
+Answer Similarity   = 0.8452
+Faithfulness        = 0.8293
+Context Precision   = 0.5388
+```
+
+Earlier benchmark versions produced higher scores but were found to contain simpler fact-extraction questions and evaluation artifacts. The final benchmark was redesigned to emphasize conceptual understanding, architectural reasoning, and retrieval quality.
+
+---
+
+# Tech Stack
+
+## Retrieval
+
+* Qdrant Cloud
+* BM25
+* Reciprocal Rank Fusion (RRF)
+
+## Embeddings
+
+* BAAI/bge-small-en-v1.5
+
+## Reranking
+
+* cross-encoder/ms-marco-MiniLM-L-6-v2
+
+## Generation
+
+* GPT-4o-mini (OpenRouter)
+
+## Routing
+
+* Hybrid (Rule-Based + LLM Router)
+
+- Rule-Based Intent Detection
+- GPT-4o-mini Query Rewriting & Ambiguity Resolution
+- Conversation History Management
+
+* GPT-4o-mini Query Rewriting
+* Conversation History Management
+
+## Frameworks
+
+* LangChain
+* Python
+
+## Data Processing
+
+* PyMuPDF
+* Sentence Transformers
+
+---
+
+# Key Lessons Learned
+
+* Retrieval quality is often more important than generation quality.
+* Evaluation bugs can be mistaken for retrieval failures.
+* Dense retrieval and BM25 complement each other.
+* Parent-child retrieval improves the precision-context tradeoff.
+* Cross-encoder reranking provides substantial gains.
+* Query routing becomes important once retrieval quality is high.
+* Building a reliable benchmark is harder than building a retriever.
+* Benchmark quality can influence reported retrieval performance more than model changes.
+* Chunking strategy is one of the most important design decisions in a RAG system.
+* Retrieval improvements often come from better data preparation and chunking rather than larger models.
+* Building a trustworthy evaluation pipeline is as important as building the retriever itself.
+
+---
+
+# Future Improvements
+
+## Retrieval
+
+* Multi-query retrieval
+* HyDE retrieval
+* Metadata-aware retrieval
+* Better semantic chunking
+* Context compression
+
+## Evaluation
+
+* Full RAGAS integration
+* Larger benchmark suites
+* Automated benchmark generation
+* Retrieval observability
+
+## Infrastructure
+
+* Redis caching
+* Query result caching
+* Context caching
+* FastAPI deployment
+* Authentication & rate limiting
+
+## Advanced Routing
+
+* Web-search routing
+* Hybrid local + web retrieval
+* Agentic retrieval workflows
+* Citation generation
+
+---
+
+# Author
+
+**Virendra Singh**
+
+AI Engineering • Retrieval Systems • LLM Applications • RAG Evaluation
