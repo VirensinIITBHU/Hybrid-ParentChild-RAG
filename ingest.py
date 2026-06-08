@@ -76,7 +76,7 @@ load_dotenv()
 # CONFIGURATION
 # ------------------------------------------------------------------
 
-PDF_DIRECTORY = "documents/AI Research Papers"
+PDF_DIRECTORY = "documents/AI research Papers"
 
 # Small chunks for retrieval
 CHILD_CHUNK_SIZE = 500
