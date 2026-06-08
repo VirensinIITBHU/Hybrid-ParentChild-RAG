@@ -318,44 +318,55 @@ Used to test routing decisions and ambiguity handling.
 
 ---
 
-# Evaluation
+# Final Evaluation
 
-## Hybrid Retrieval Evaluation
+The final evaluation was performed on:
 
-Before any evalution you have to create a dataset , existing dataset witll not work when you will re ingest the data, ids will get rewritten
+* 10 research papers
+* 3,396 indexed chunks
+* 46 benchmark questions
+* Parent-level retrieval evaluation
 
-
-```bash
-python -u creatingQues.py
-```
-
-```bash
-python main.py --mode eval
-```
-
-Evaluates retrieval quality using the benchmark dataset.
-
----
-
-## Mini-RAGAS Evaluation
-
-```bash
-python main.py --mode ragas
-```
-
-Example Output:
+## Retrieval Evaluation
 
 ```text
-MINI RAGAS V2
-
-Retrieval Recall@10 = 91.78%
-
-Answer Similarity = 0.8452
-
-Faithfulness = 0.8293
-
-Context Precision = 0.5388
+BM25 Recall@10      = 91.30%
+Dense Recall@10     = 84.78%
+Hybrid Recall@10    = 97.83%
 ```
+
+Only a single benchmark question failed to retrieve the correct parent document within the top 10 results.
+
+## Custom RAG Evaluation Framework
+
+```text
+Retrieval Recall@10 = 0.9783
+Answer Similarity   = 0.8602
+Faithfulness        = 0.7732
+Context Precision   = 0.6159
+```
+
+The evaluation framework measures:
+
+* Retrieval Recall
+* Answer Similarity
+* Faithfulness
+* Context Precision
+
+allowing retrieval and generation quality to be monitored throughout development.
+
+### Key Observation
+
+Hybrid retrieval consistently outperformed both dense retrieval and BM25 individually:
+
+```text
+Dense Retrieval      → 84.78%
+BM25 Retrieval       → 91.30%
+Hybrid Retrieval     → 97.83%
+```
+
+This validates the effectiveness of combining lexical and semantic retrieval with fusion and reranking.
+
 
 ---
 
